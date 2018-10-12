@@ -1,17 +1,20 @@
-<%@ page import="java.util.List"%>
-<%@ page import="org.apache.commons.fileupload.FileItemFactory"%>
-<%@ page import="org.apache.commons.fileupload.FileItem"%>
-<%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
-<%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
-<%@ page import="java.io.File" %>
+<%@page import="innui.ejercicio_jsp_09.Conexiones"%>
+<%@page import="innui.ejercicio_jsp_09.Model"%>
+<%@page import="innui.ejercicio_jsp_09.Empleados"%>
+<%@page import="java.sql.Connection"%>
 
-<%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Date"%>
-<%@ page import="java.text.DateFormat"%>
-<%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="org.apache.commons.fileupload.FileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="java.io.File" %>
 
-<%@ page import="org.Empleado"%>
-<%@ page import="org.Model"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+
 
 <%
    	/*FileItemFactory es una interfaz para crear FileItem*/
@@ -33,9 +36,10 @@
 			valor=item.getString();
         }else{
 			/*creamos un nombre, para que no se sobbre-escriban archivos*/
-			valor=(new Date().getTime())+item.getName();
+                        valor=(new Date().getTime())+item.getName();
 			/*cual sera la ruta al archivo en el servidor*/
-			File archivo_server = new File("c:/Archivos de programa/Apache Software Foundation/Apache Tomcat 6.0.24(stand)/webapps/ejercicio09/subidos/"+valor);
+                        String ruta="/mnt/extras/home/daw/NetBeansProjects/WebApplication9/web/subidos/";
+			File archivo_server = new File(ruta+valor);
 			/*y lo escribimos en el servido*/
 			item.write(archivo_server);
 		}
@@ -49,7 +53,7 @@
 <%
 	DateFormat formato_fecha = new SimpleDateFormat("dd/MM/yyyy");
 	/*utilizamos la DateFormat para convertir un string a Date*/
-	Empleado empleado = new Empleado();
+	Empleados empleado = new Empleados();
 	empleado.setNombre(parametros.get("nombre"));
 	empleado.setApellido(parametros.get("apellido"));
 	empleado.setIdentificacion(Integer.parseInt(parametros.get("identificacion")));
@@ -58,9 +62,13 @@
 	empleado.setTransporte(Double.parseDouble(parametros.get("transporte")));
 	empleado.setFdn(formato_fecha.parse(parametros.get("fdn")));
 	empleado.setFoto(parametros.get("foto"));
-	Model model=(Model)application.getAttribute("model");
-	model.agregarEmpleado(empleado);
+        
+        String[] error=(String[])session.getAttribute("error");
+        Connection connection=(Connection)session.getAttribute("conexion");
+       
+        Model.agregarEmpleado(empleado,connection,error);
 %>
+
 <!--La parte del hasmap lo quise poner de esa forma, pero cada quien es libre de -->
 <!--hacerlo como mas le gusta mas adelante lo veran de forma bastante diferente -->
 <jsp:forward page="index.jsp"/>

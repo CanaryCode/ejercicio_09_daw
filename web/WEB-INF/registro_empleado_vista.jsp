@@ -1,5 +1,5 @@
 
-<form action="WEB-INF/proceso_vista." method="post" enctype="multipart/form-data" >
+<form action="proceso_vista.jsp" method="post" enctype="multipart/form-data" >
 	<table id="registro" width="110" border="0" cellspacing="0" cellpadding="5">
 		<tr align="center">
 			<td colspan="2" align="center">DATOS EMPLEADO</td>
@@ -13,7 +13,7 @@
 			<td><input name="apellido" type="text"></td>
 		</tr>
 		<tr>
-			<td>Identificacion</td>
+			<td>Identificación</td>
 			<td><input name="identificacion" type="text"></td>
 		</tr>
 		<tr>
@@ -23,10 +23,10 @@
   		<tr>
     		<td valign="top">Departamento</td>
     		<td> 
-				<input type="radio" name="departamento" value="1">Sitemas<br>
+				<input type="radio" name="departamento" value="1">Sistemas<br>
     			<input type="radio" name="departamento" value="2">Contabilidad<br>
 				<input type="radio" name="departamento" value="3">Recursos humanos<br>
-				<input type="radio" name="departamento" value="4">Administracion<br>
+				<input type="radio" name="departamento" value="4">Administración<br>
 				<input type="radio" name="departamento" value="5">Servicios generales
 	    	</td>
   		</tr>
